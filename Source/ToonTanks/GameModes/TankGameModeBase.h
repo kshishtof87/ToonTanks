@@ -12,14 +12,14 @@ UCLASS()
 class TOONTANKS_API ATankGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
+	
 private:
-	APawnTank* PlayerTank;
+	APawnTank *PlayerTank;
 	int32 TargetTurrets = 0;
 
 	int32 GetTargetTurretCount();
 	void HandleGameStart();
-	void HandleGameOver(bool PlayerWon);
-
+	void HandleGameOver(bool PlayerWon);	
 
 public:
 
@@ -27,9 +27,13 @@ public:
 
 protected:
 
-	virtual	void BeginPlay() override;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Game Loop")
+	int32 StartDelay = 3;
+
+	virtual void BeginPlay() override;
 	UFUNCTION(BlueprintImplementableEvent)
 	void GameStart();
 	UFUNCTION(BlueprintImplementableEvent)
 	void GameOver(bool PlayerWon);
 };
+
