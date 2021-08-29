@@ -2,61 +2,60 @@
 
 
 #include "PawnTurret.h"
-
 #include "Kismet/GameplayStatics.h"
 #include "PawnTank.h"
 
-
+// Called when the game starts or when spawned
 void APawnTurret::BeginPlay()
 {
-	Super::BeginPlay();
-	
-	GetWorld()->GetTimerManager().SetTimer(FireRateTimerHandle, this, &APawnTurret::CheckFireCondition, FireRate, true);
+    Super::BeginPlay();
 
-	PlayerPawn = Cast<APawnTank>(UGameplayStatics::GetPlayerPawn(this, 0));
+    GetWorld()->GetTimerManager().SetTimer(FireRateTimerHandle, this, &APawnTurret::CheckFireCondition, FireRate, true);
+
+    PlayerPawn = Cast<APawnTank>(UGameplayStatics::GetPlayerPawn(this, 0));
 }
 
-void APawnTurret::HandleDestruction()
+void APawnTurret::HandleDestruction() 
 {
-	Super::HandleDestruction();
-	Destroy();
+    // Call base pawn class HandleDestruction to play effects. 
+    Super::HandleDestruction();
+    Destroy();    
 }
-
 
 // Called every frame
 void APawnTurret::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
-	if(!PlayerPawn || ReturnDistanceToPlayer() > FireRange)
-	{
-		return;
-	}
+    Super::Tick(DeltaTime);
 
-	RotateTurret(PlayerPawn->GetActorLocation());
+    if(!PlayerPawn || ReturnDistanceToPlayer() > FireRange)
+    {
+        return;
+    }
+
+    RotateTurret(PlayerPawn->GetActorLocation());
 }
 
-void APawnTurret::CheckFireCondition()
+void APawnTurret::CheckFireCondition() 
 {
-	// if player == null || is dead then BAIL!
-	if (!PlayerPawn)
-	{
-		return;
-	}
-
-	// if player IS in range THEN FIRE!
-	if (ReturnDistanceToPlayer() <= FireRange)
-	{
-		Fire();
-	}
-
+    // If Player == null || is Dead THEN BAIL!!
+    if(!PlayerPawn)
+    {
+        return;
+    }
+    // IF Player IS in range THEN FIRE!! 
+    if(ReturnDistanceToPlayer() <= FireRange)
+    {
+        Fire();
+    }
+   
 }
 
-float APawnTurret::ReturnDistanceToPlayer()
+float APawnTurret::ReturnDistanceToPlayer() 
 {
-	if (!PlayerPawn)
-	{
-		return 0.f;
-	}
+    if (!PlayerPawn)
+    {
+        0.0f;
+    }
 
-	return FVector::Dist(PlayerPawn->GetActorLocation(), GetActorLocation());	
+    return FVector::Dist(PlayerPawn->GetActorLocation(), GetActorLocation());
 }
