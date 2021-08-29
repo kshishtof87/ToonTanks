@@ -17,7 +17,6 @@ UHealthComponent::UHealthComponent()
 void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
 	Health = DefaultHealth;
 	GameModeRef = Cast<ATankGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 	GetOwner()->OnTakeAnyDamage.AddDynamic(this, &UHealthComponent::TakeDamage);
@@ -31,6 +30,7 @@ void UHealthComponent::TakeDamage(AActor* DamagedActor, float Damage, const UDam
 		return;
 	}
 	Health = FMath::Clamp(Health - Damage, 0.f, DefaultHealth);
+	UE_LOG(LogTemp,Warning, TEXT("%s has taken: %f units of Damage. Health is now: %f"),*GetOwner()->GetName(),Damage,Health); //debug line to show health change
 
 	if (Health <= 0)
 	{
