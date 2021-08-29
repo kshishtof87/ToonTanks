@@ -13,7 +13,6 @@ void ATankGameModeBase::ActorDied(AActor* DeadActor)
 {
 	// check what type of Actor died. IF turret, tally, if Player -> go to lose condition.
 	UE_LOG(LogTemp, Warning, TEXT("APawn Died"));
-	
 }
 
 void ATankGameModeBase::HandleGameStart()
