@@ -34,7 +34,11 @@ private:
 	UParticleSystem* HitParticle;
 	// FUNCTIONS
 	UFUNCTION()
-	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,FVector NormalImpulse, const FHitResult& Hit);
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	USoundBase* HitSound;
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	USoundBase* LaunchSound;
 	
 protected:
 	// Called when the game starts or when spawned
